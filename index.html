@@ -1,1 +1,285 @@
-.
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>V — The Expanding Grammar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg: #0a0a0f; --bg2: #13131a; --bg3: #1c1c26; --border: #2a2a3a;
+  --amber: #f0a500; --amber-dim: #a07010;
+  --violet: #9b6dff; --violet-dim: #5a3fa0;
+  --teal: #2dd4bf; --rose: #e0546b; --rose-dim: #7a3040;
+  --text: #e8e8f0; --text-dim: #8888a8; --text-muted: #555570;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --mono: 'DM Mono', monospace;
+}
+[data-theme="light"] {
+  --bg: #f8f7f2; --bg2: #eeede6; --bg3: #e4e2d8; --border: #cccabb;
+  --text: #1a1a2e; --text-dim: #555570; --text-muted: #9998b0;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 17px; line-height: 1.7; min-height: 100vh; }
+:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+
+nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 2rem; backdrop-filter: blur(8px); }
+.nav-logo { font-family: var(--mono); font-size: 0.8rem; color: var(--amber); letter-spacing: 0.08em; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+.nav-logo .logo-spin { display: inline-block; animation: spin 12s linear infinite; font-size: 1.1rem; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.nav-links { display: flex; gap: 1.5rem; list-style: none; font-size: 0.78rem; font-family: var(--mono); }
+.nav-links a { color: var(--text-dim); text-decoration: none; }
+.nav-links a:hover, .nav-links a.active { color: var(--amber); }
+.theme-btn { background: none; border: 1px solid var(--border); color: var(--text-dim); cursor: pointer; font-family: var(--mono); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 4px; }
+.theme-btn:hover { border-color: var(--amber); color: var(--amber); }
+
+.hero { max-width: 860px; margin: 0 auto; padding: 5rem 2rem 3rem; border-bottom: 1px solid var(--border); }
+.hero-eyebrow { font-family: var(--mono); font-size: 0.72rem; color: var(--rose); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.2rem; }
+h1 { font-family: var(--serif); font-size: clamp(2.4rem, 5vw, 3.8rem); line-height: 1.08; margin-bottom: 1rem; }
+h1 em { color: var(--rose); font-style: italic; }
+.hero-sub { font-size: 1.1rem; color: var(--text-dim); max-width: 620px; margin-bottom: 2rem; }
+.hero-meta { font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted); display: flex; gap: 2rem; flex-wrap: wrap; }
+
+main { max-width: 860px; margin: 0 auto; padding: 0 2rem 6rem; }
+section { padding: 3.5rem 0; border-bottom: 1px solid var(--border); }
+section:last-child { border-bottom: none; }
+.section-label { font-family: var(--mono); font-size: 0.68rem; color: var(--violet); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.8rem; }
+h2 { font-family: var(--serif); font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 1.2rem; line-height: 1.2; }
+h3 { font-family: var(--serif); font-size: 1.2rem; color: var(--amber); margin: 2rem 0 0.6rem; }
+p { margin-bottom: 1rem; color: var(--text-dim); }
+p strong { color: var(--text); font-weight: 600; }
+a.inline { color: var(--teal); text-decoration: none; border-bottom: 1px solid var(--teal-dim, rgba(45,212,191,0.4)); }
+a.inline:hover { border-bottom-color: var(--teal); }
+
+/* CHAIN TABLE */
+.chain-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.88rem; }
+.chain-table th { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border); padding: 0.5rem 0.8rem; text-align: left; }
+.chain-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--border); color: var(--text-dim); vertical-align: top; }
+.chain-table tr:hover td { background: var(--bg2); }
+.chain-table .stage { font-family: var(--mono); color: var(--amber); font-weight: 500; white-space: nowrap; }
+.chain-table .boundary td { color: var(--teal); }
+.chain-table a { color: inherit; }
+
+/* SOURCE LIST */
+.source-list { list-style: none; margin: 1.5rem 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.source-item { display: grid; grid-template-columns: 90px 1fr auto; gap: 1rem; align-items: baseline; padding: 0.9rem 1.2rem; border-bottom: 1px solid var(--border); background: var(--bg2); }
+.source-item:last-child { border-bottom: none; }
+.source-date { font-family: var(--mono); font-size: 0.68rem; color: var(--text-muted); }
+.source-name { color: var(--text); font-weight: 500; }
+.source-desc { display: block; color: var(--text-dim); font-size: 0.88rem; margin-top: 0.15rem; font-weight: 400; }
+.source-link { font-family: var(--mono); font-size: 0.7rem; color: var(--teal); text-decoration: none; white-space: nowrap; }
+.source-link:hover { text-decoration: underline; }
+
+/* PULL */
+.pull { border-left: 3px solid var(--violet); padding: 0.8rem 1.4rem; margin: 2rem 0; background: var(--bg2); border-radius: 0 6px 6px 0; }
+.pull p { color: var(--text); margin: 0; font-style: italic; font-size: 1.02rem; }
+.pull .attr { font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted); margin-top: 0.5rem; font-style: normal; }
+
+/* LEDGER */
+.ledger { border: 1px solid var(--rose-dim); border-radius: 8px; overflow: hidden; margin: 1.8rem 0; background: var(--bg2); }
+.ledger-row { display: grid; grid-template-columns: 90px 1fr; border-bottom: 1px solid var(--border); }
+.ledger-row:last-child { border-bottom: none; }
+.ledger-idx { font-family: var(--mono); font-size: 0.7rem; color: var(--rose); background: var(--bg3); padding: 1rem 0.8rem; display: flex; align-items: flex-start; }
+.ledger-body { padding: 1rem 1.2rem; }
+.ledger-claim { font-family: var(--mono); font-size: 0.78rem; color: var(--text-muted); text-decoration: line-through; margin-bottom: 0.3rem; }
+.ledger-override { font-family: var(--mono); font-size: 0.78rem; color: var(--teal); margin-bottom: 0.5rem; }
+.ledger-delta { font-size: 0.92rem; color: var(--text-dim); }
+.ledger-meta { font-family: var(--mono); font-size: 0.64rem; color: var(--text-muted); margin-top: 0.6rem; letter-spacing: 0.04em; }
+
+/* RUPTURE */
+.rupture { background: linear-gradient(135deg, var(--bg2) 0%, #1a1228 100%); border: 1px solid var(--violet-dim); border-radius: 8px; padding: 1.5rem 1.8rem; margin: 2rem 0; }
+.rupture-label { font-family: var(--mono); font-size: 0.65rem; color: var(--violet); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.6rem; }
+.rupture p { color: var(--text); margin: 0; }
+
+/* AXIOM */
+.axiom { text-align: center; padding: 2.5rem 1rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin: 2.5rem 0; }
+.axiom-text { font-family: var(--serif); font-size: clamp(1.4rem, 3vw, 2rem); color: var(--rose); font-style: italic; margin-bottom: 0.4rem; }
+.axiom-sub { font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.08em; }
+
+footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted); }
+footer a { color: var(--text-muted); }
+
+@media (max-width: 600px) {
+  nav { padding: 0.6rem 1rem; } .nav-links { gap: 1rem; }
+  main, .hero { padding-left: 1rem; padding-right: 1rem; }
+  .ledger-row { grid-template-columns: 60px 1fr; }
+  .source-item { grid-template-columns: 1fr; gap: 0.3rem; }
+}
+@media (prefers-reduced-motion: reduce) { .logo-spin { animation: none; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#top"><span class="logo-spin">◈</span><span>Ukubona LLC</span></a>
+  <ul class="nav-links">
+    <li><a href="#chain">Chain</a></li>
+    <li><a href="#sources">Sources</a></li>
+    <li><a href="#ledger">Ledger</a></li>
+    <li><a href="#resolve">Resolve</a></li>
+  </ul>
+  <button class="theme-btn" id="themeBtn">☾ / ☀</button>
+</nav>
+
+<div class="hero" id="top">
+  <p class="hero-eyebrow">Ukubona · Field Note · 17 July 2026</p>
+  <h1>V — the <em>expanding</em> grammar</h1>
+  <p class="hero-sub">Not a new pentad. A note on what the last three years of pentads were actually doing: the same small grammar, asked to hold a progressively larger unit — filesystem, graph, router, curriculum, institution — until, tonight, it got asked to hold a decision about how I work.</p>
+  <div class="hero-meta">
+    <span>Anthropic pass · post-roundtable</span>
+    <span>Kampala → Baltimore</span>
+    <span>Okubala si Kulaba</span>
+  </div>
+</div>
+
+<main>
+
+<section id="chain">
+  <p class="section-label">I — What Actually Recurred</p>
+  <h2>Filesystem → Graph → Router → Curriculum → Institution</h2>
+  <p>Not recursion for its own sake — the unit of abstraction under the grammar kept expanding. Same compression chain, five times, at five different scales, over roughly three years:</p>
+
+  <table class="chain-table">
+    <thead><tr><th>Unit</th><th>Artifact</th><th>What compressed</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="stage">Filesystem</td>
+        <td><a href="https://ukb-pyro.github.io/soa/" class="inline">The Serpent's Code</a></td>
+        <td>Directory trees read as institutional DNA. <code>find</code> as Genesis.</td>
+      </tr>
+      <tr>
+        <td class="stage">Graph</td>
+        <td><a href="https://ukubona-llc.github.io/necromancy/" class="inline">Necromancy</a></td>
+        <td>Doppelgangers, collaboration networks, organizational DNA as a traversable graph.</td>
+      </tr>
+      <tr class="boundary">
+        <td class="stage">Router</td>
+        <td><a href="https://ukubona-llc.github.io/ear-bc/" class="inline">EAR-BC</a> / <a href="https://ukubona-llc.github.io/ear-bc-ii/" class="inline">EAR-BC II</a></td>
+        <td>FastAPI/SlowAPI escalation. Deterministic tiers exhaust before an LLM wakes.</td>
+      </tr>
+      <tr>
+        <td class="stage">Curriculum</td>
+        <td>Dr. K's School — T-series</td>
+        <td>Five subjects, five levels, the pentad as a teaching scaffold.</td>
+      </tr>
+      <tr class="boundary">
+        <td class="stage">Institution</td>
+        <td><a href="https://twin-os.onrender.com/" class="inline">Twin-OS</a></td>
+        <td>Civilizational stack — Sovereign, Kin, Ecosystem, Federated, Civilizational. NPA, WHO India, UCU as live layers.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pull">
+    <p>The continuity isn't that I'm explaining everything with one metaphor; it's that I've been testing whether a small computational grammar can survive contact with increasingly complex domains without losing explanatory power.</p>
+    <p class="attr">— named in the roundtable, not by me</p>
+  </div>
+
+  <p>Each jump up the chain is a jump in what's actually at stake if the grammar is wrong. A mis-mapped directory costs nothing. A mis-routed clinical escalation costs a patient. A mis-scoped curriculum costs a child's data trail. The grammar didn't get more true as it scaled — it got more expensive to be wrong.</p>
+</section>
+
+<section id="sources">
+  <p class="section-label">II — The Record</p>
+  <h2>Five Artifacts, One Line</h2>
+  <ul class="source-list">
+    <li class="source-item">
+      <span class="source-date">2023</span>
+      <span class="source-name">The Serpent's Code<span class="source-desc">Ego-dissolution into systems thinking. Directory-as-DNA.</span></span>
+      <a class="source-link" href="https://ukb-pyro.github.io/soa/" target="_blank" rel="noopener">soa/</a>
+    </li>
+    <li class="source-item">
+      <span class="source-date">—</span>
+      <span class="source-name">Necromancy<span class="source-desc">Doppelgangers and graph-structured organizational memory.</span></span>
+      <a class="source-link" href="https://ukubona-llc.github.io/necromancy/" target="_blank" rel="noopener">necromancy/</a>
+    </li>
+    <li class="source-item">
+      <span class="source-date">17 Jul 2026</span>
+      <span class="source-name">EAR-BC<span class="source-desc">The Fractal Router. Okubala (counting) vs. kulaba (seeing).</span></span>
+      <a class="source-link" href="https://ukubona-llc.github.io/ear-bc/" target="_blank" rel="noopener">ear-bc/</a>
+    </li>
+    <li class="source-item">
+      <span class="source-date">17 Jul 2026</span>
+      <span class="source-name">EAR-BC II<span class="source-desc">The Correction Ledger. Sovereign overrides as first-class events.</span></span>
+      <a class="source-link" href="https://ukubona-llc.github.io/ear-bc-ii/" target="_blank" rel="noopener">ear-bc-ii/</a>
+    </li>
+    <li class="source-item">
+      <span class="source-date">2026</span>
+      <span class="source-name">Twin-OS<span class="source-desc">The civilizational stack. Three layers delivered, two in rehearsal.</span></span>
+      <a class="source-link" href="https://twin-os.onrender.com/" target="_blank" rel="noopener">twin-os/</a>
+    </li>
+  </ul>
+</section>
+
+<section id="ledger">
+  <p class="section-label">III — Logged Tonight</p>
+  <h2>One Entry, Not Retroactive</h2>
+  <p>Everything above is description — five artifacts, one recurring chain. This entry is the only thing that changes anything going forward, so it gets logged the way the clinical ledger logs a divergence: claim, override, delta, source.</p>
+
+  <div class="ledger">
+    <div class="ledger-row">
+      <div class="ledger-idx">05</div>
+      <div class="ledger-body">
+        <div class="ledger-claim">Philosophy first, apps as illustration</div>
+        <div class="ledger-override">→ Apps first, judged by clients, philosophy earns its keep only if it survives contact with a gradient</div>
+        <div class="ledger-delta">Five artifacts of theory-building, verified against each other. The next artifacts get verified against whether a client's loss function actually goes down — subjective or objective, but measured, not narrated.</div>
+        <div class="ledger-meta">sovereign_override: true · source: Abimereki · scope: operating principle, forward-only</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rupture">
+    <p class="rupture-label">Scope note</p>
+    <p>This doesn't retract the chain above — it closes it. Filesystem through Institution was the grammar proving it could hold larger units. The next test isn't a larger unit. It's an external one: a client's gradient, which doesn't care how elegant the pentad is if the number doesn't move.</p>
+  </div>
+</section>
+
+<section id="resolve">
+  <p class="section-label">IV — The Line Itself</p>
+  <h2>"My Thoughts Be Bloody, or Be Nothing Worth"</h2>
+  <p>Hamlet says this to himself in Act IV, watching Fortinbras march an army across a plain for a patch of ground not worth the burying of the men who'll die for it — and deciding that scale of resolve, not its object, is the thing he's been missing. The line isn't about the worthiness of the goal. It's about the gap between having reasons and acting on them.</p>
+  <p>Applied here, plainly: the roundtable did its job — recursion named, the Hessian gap resolved, the ledger built, entry 03 closed. That's five artifacts of <strong>reasons</strong>. What comes next is judged on a different axis entirely — not whether the pentad is internally consistent, but whether an app built from it moves a number a client actually cares about.</p>
+
+  <div class="axiom">
+    <div class="axiom-text">Okubala si kulaba</div>
+    <div class="axiom-sub">the philosophy counted. now something has to be seen — by someone who isn't me</div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Ukubona LLC · Kampala · 17 July 2026 · fifth artifact in the chain, first with a client-facing test<br>
+  <a href="https://ukb-pyro.github.io/soa/" target="_blank" rel="noopener">soa</a> ·
+  <a href="https://ukubona-llc.github.io/necromancy/" target="_blank" rel="noopener">necromancy</a> ·
+  <a href="https://ukubona-llc.github.io/ear-bc/" target="_blank" rel="noopener">ear-bc</a> ·
+  <a href="https://ukubona-llc.github.io/ear-bc-ii/" target="_blank" rel="noopener">ear-bc-ii</a> ·
+  <a href="https://twin-os.onrender.com/" target="_blank" rel="noopener">twin-os</a>
+</footer>
+
+<script>
+const html = document.documentElement;
+const btn = document.getElementById('themeBtn');
+btn.addEventListener('click', () => {
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+});
+
+const sections = document.querySelectorAll('section[id], .hero[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(a => a.classList.remove('active'));
+      const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.4 });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
