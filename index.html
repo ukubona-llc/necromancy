@@ -64,6 +64,9 @@ a.inline:hover { border-bottom-color: var(--teal); }
 .chain-table .stage { font-family: var(--mono); color: var(--amber); font-weight: 500; white-space: nowrap; }
 .chain-table .boundary td { color: var(--teal); }
 .chain-table a { color: inherit; }
+.cell-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.cell-list li { padding-left: 1rem; position: relative; }
+.cell-list li::before { content: '·'; position: absolute; left: 0; color: var(--amber-dim); }
 
 /* SOURCE LIST */
 .source-list { list-style: none; margin: 1.5rem 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
@@ -149,18 +152,13 @@ footer a { color: var(--text-muted); }
     <tbody>
       <tr>
         <td class="stage">Filesystem</td>
-        <td><a href="https://jhustata.github.io/workflow/" class="inline">Stata Workflow</a></td>
-        <td>Local vs. remote toggle. The first time "GitHub as backend" got said out loud instead of just done.</td>
-      </tr>
-      <tr class="boundary">
-        <td class="stage">Filesystem</td>
-        <td><a href="https://ukubona-llc.github.io/assets/html/pairs-jh.html" class="inline">PAIRS@JH</a></td>
-        <td>The delicious one. .csv as universal lingua franca; every language — Python, R, Stata, JS — a transformation kernel in the same loop. The filesystem idea, actually running.</td>
-      </tr>
-      <tr>
-        <td class="stage">Filesystem</td>
-        <td><a href="https://ukb-pyro.github.io/soa/" class="inline">The Serpent's Code</a></td>
-        <td>Directory trees read as institutional DNA. <code>find</code> as Genesis. Still the anchor — PAIRS@JH is the proof, not the replacement.</td>
+        <td colspan="2">
+          <ul class="cell-list">
+            <li><a href="https://jhustata.github.io/workflow/" class="inline">Stata Workflow</a> — the inflection point. Local vs. remote GitHub toggle, said out loud instead of just done.</li>
+            <li><a href="https://ukubona-llc.github.io/assets/html/pairs-jh.html" class="inline">PAIRS@JH</a> — the delicious one. .csv as universal lingua franca; every language a transformation kernel in one loop.</li>
+            <li><a href="https://ukb-pyro.github.io/soa/" class="inline">The Serpent's Code</a> — the anchor. Directory trees as institutional DNA. <code>find</code> as Genesis. Origin myth, not superseded.</li>
+          </ul>
+        </td>
       </tr>
       <tr>
         <td class="stage">Graph</td>
@@ -191,7 +189,7 @@ footer a { color: var(--text-muted); }
   </div>
 
   <p>Each jump up the chain is a jump in what's actually at stake if the grammar is wrong. A mis-mapped directory costs nothing. A mis-routed clinical escalation costs a patient. A mis-scoped curriculum costs a child's data trail. The grammar didn't get more true as it scaled — it got more expensive to be wrong.</p>
-  <p>Filesystem alone got three entries because it's the tier with the clearest before/after: a workflow toggle, then a real recursive stack built on top of it, then the philosophical read of the whole idea that predates both and still explains why either was worth building.</p>
+  <p>Filesystem gets three artifacts because it's the tier with the clearest before/after — but it stays one row. Five units, five rows. The pentad is the constraint, not a suggestion I get to relax when a tier is well-documented.</p>
 </section>
 
 <section id="sources">
@@ -261,8 +259,8 @@ footer a { color: var(--text-muted); }
       <div class="ledger-body">
         <div class="ledger-claim">Curriculum tier = Dr. K's School, T-series, static</div>
         <div class="ledger-override">→ Curriculum tier = j-digital-twin.onrender.com, login-gated, append-only</div>
-        <div class="ledger-delta">Same five pillars, but the artifact upgraded out from under the first draft of this page within hours of it going up. Filesystem tier also underspecified — PAIRS@JH was missing entirely, and it's the tier's clearest working instance, not just its 2023 origin myth.</div>
-        <div class="ledger-meta">sovereign_override: true · source: Abimereki · scope: chain-table accuracy</div>
+        <div class="ledger-delta">Same five pillars, but the artifact upgraded out from under the first draft of this page within hours of it going up. First fix also broke the constraint that made the chain worth having — three filesystem rows instead of one. Five units, five rows, always. PAIRS@JH and the workflow toggle went in as bullets under Filesystem, not as new tiers.</div>
+        <div class="ledger-meta">sovereign_override: true · source: Abimereki · scope: chain-table accuracy + pentadic constraint</div>
       </div>
     </div>
   </div>
@@ -288,7 +286,7 @@ footer a { color: var(--text-muted); }
 </main>
 
 <footer>
-  Ukubona LLC · Kampala · 17 July 2026 · seventh artifact in the chain, first with a client-facing test<br>
+  Ukubona LLC · Kampala · 17 July 2026 · five tiers, seven artifacts, first with a client-facing test<br>
   <a href="https://ukb-pyro.github.io/soa/" target="_blank" rel="noopener">soa</a> ·
   <a href="https://jhustata.github.io/workflow/" target="_blank" rel="noopener">workflow</a> ·
   <a href="https://ukubona-llc.github.io/assets/html/pairs-jh.html" target="_blank" rel="noopener">pairs-jh</a> ·
